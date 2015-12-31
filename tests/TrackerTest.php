@@ -6,36 +6,30 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
 {
     protected $tracker;
     public function setUp()
-    {   
-
+    {
         SSGoogleAnalytics::setDomain('test.net.nz');
         SSGoogleAnalytics::setTrackingCode('UA-11111111-1');
-        SSGoogleAnalytics::setLoggingCallback(function($request) {
+        SSGoogleAnalytics::setLoggingCallback(function ($request) {
             return $request;
         });
 
         $this->tracker = new SSGoogleAnalytics();
-
     }
     
     public function testDomain()
     {
-
         $this->assertEquals(
             SSGoogleAnalytics::getDomain(),
             'test.net.nz'
         );
-
     }
 
     public function testTrackingCode()
     {
-
         $this->assertEquals(
             SSGoogleAnalytics::getTrackingCode(),
             'UA-11111111-1'
         );
-
     }
 
     public function testLoggingCallback()
@@ -51,7 +45,6 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
             $callback('testLoggingCallback'),
             'testLoggingCallback'
         );
-
     }
 
     public function testTracker()
@@ -67,7 +60,5 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
             $this->tracker->getGATracker()->getDomainName(),
             'test.net.nz'
         );
-
     }
-
 }

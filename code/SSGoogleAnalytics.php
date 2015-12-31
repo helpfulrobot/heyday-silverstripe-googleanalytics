@@ -1,7 +1,6 @@
 <?php
 
 use UnitedPrototype\GoogleAnalytics;
-
 use Cookie as SSCookie;
 use Session as SSSession;
 
@@ -41,16 +40,16 @@ class SSGoogleAnalytics
      * Creates the object using the statically configured tracking code and domain
      */
     public function __construct()
-    {        
-        if (!self::$trackingCode || !self::$domain) {            
-            throw new RuntimeException('Please set a tracking code and domain for this analytics instance.');            
-        }        
+    {
+        if (!self::$trackingCode || !self::$domain) {
+            throw new RuntimeException('Please set a tracking code and domain for this analytics instance.');
+        }
     }
     /**
      * Set the tracking code to use
      * @param strin $trackingCode The tracking code
      */
-    public static function setTrackingCode($trackingCode) 
+    public static function setTrackingCode($trackingCode)
     {
         self::$trackingCode = $trackingCode;
     }
@@ -66,7 +65,7 @@ class SSGoogleAnalytics
      * Set the domain to use
      * @param string $domain The domain to use
      */
-    public static function setDomain($domain) 
+    public static function setDomain($domain)
     {
         self::$domain = $domain;
     }
@@ -82,7 +81,7 @@ class SSGoogleAnalytics
      * Sets logging callback to use
      * @param string $loggingCallback Logging callback
      */
-    public static function setLoggingCallback($loggingCallback) 
+    public static function setLoggingCallback($loggingCallback)
     {
         self::$loggingCallback = $loggingCallback;
     }
@@ -99,7 +98,7 @@ class SSGoogleAnalytics
      * @return GoogleAnalytics\Tracker The GA tracker
      */
     public function getGATracker()
-    {   
+    {
         if (null == $this->gaTracker) {
             $this->setGATracker(
                 new GoogleAnalytics\Tracker(
@@ -115,14 +114,14 @@ class SSGoogleAnalytics
                     )
                 )
             );
-        }        
+        }
         return $this->gaTracker;
     }
     /**
      * Set a GA tracker
      * @param GoogleAnalytics\Tracker $tracker The tracker
      */
-    public function setGATracker(GoogleAnalytics\Tracker $tracker) 
+    public function setGATracker(GoogleAnalytics\Tracker $tracker)
     {
         $this->gaTracker = $tracker;
     }
@@ -142,7 +141,7 @@ class SSGoogleAnalytics
             $this->setGAVisitor($visitor);
         }
         
-        return $this->gaVisitor;        
+        return $this->gaVisitor;
     }
     /**
      * Set a GA Visitor
@@ -150,14 +149,14 @@ class SSGoogleAnalytics
      */
     public function setGAVisitor(GoogleAnalytics\Visitor $visitor)
     {
-        $this->gaVisitor = $visitor;        
+        $this->gaVisitor = $visitor;
     }
     /**
      * Get a GA Session, if one doesn't exist in on the object or in the session, then build a new one from the utmb cookie
      * @return GoogleAnalytics\Session The GA Session
      */
     public function getGASession()
-    {        
+    {
         if (null == $this->gaSession) {
             $sessionRaw = SSSession::get('SSGA_Session');
             $session = $sessionRaw ? unserialize(SSSession::get('SSGA_Session')) : false;
@@ -169,7 +168,7 @@ class SSGoogleAnalytics
             }
             $this->setGASession($session);
         }
-        return $this->gaSession;        
+        return $this->gaSession;
     }
     /**
      * Set a GA Session to the object and the silverstripe php session
@@ -186,7 +185,7 @@ class SSGoogleAnalytics
      * @return null
      */
     public function trackPageview(GoogleAnalytics\Page $page)
-    {   
+    {
         $this->getGATracker()->trackPageview(
             $page,
             $this->getGASession(),
@@ -212,11 +211,11 @@ class SSGoogleAnalytics
      * @return null
      */
     public function trackTransaction(GoogleAnalytics\Transaction $transaction)
-    {   
+    {
         $this->getGATracker()->trackTransaction(
             $transaction,
             $this->getGASession(),
             $this->getGAVisitor()
         );
-    }    
+    }
 }
